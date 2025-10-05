@@ -1,0 +1,2991 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeLearn - منصة تعلم البرمجة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-color: #1f2937;
+            --light-bg: #f3f4f6;
+            --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
+            --dark-bg: #1e293b;
+            --admin-color: #7c3aed;
+            --border-color: #e5e7eb;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #3b82f6;
+            --secondary-color: #1e40af;
+            --text-color: #f3f4f6;
+            --light-bg: #1f2937;
+            --white: #111827;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --border-color: #374151;
+            --dark-bg: #0f172a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-color);
+            background-color: rgba(37, 99, 235, 0.1);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #0da271;
+            transform: translateY(-2px);
+        }
+
+        .btn-admin {
+            background-color: var(--admin-color);
+            color: white;
+        }
+
+        .btn-admin:hover {
+            background-color: #6d28d9;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background-color: var(--error-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .btn-block {
+            width: 100%;
+            padding: 0.75rem;
+        }
+
+        .btn-large {
+            padding: 0.75rem 2rem;
+            font-size: 1.1rem;
+        }
+
+        .btn-icon {
+            padding: 0.5rem;
+            width: 40px;
+            height: 40px;
+        }
+
+        .btn-small {
+            padding: 0.25rem 0.75rem;
+            font-size: 0.875rem;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            transform: rotate(30deg);
+        }
+
+        /* Page Sections */
+        .page {
+            display: none;
+            min-height: 80vh;
+            padding: 2rem 0;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .guest-message {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin: 2rem 0;
+        }
+
+        .guest-message h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .guest-message p {
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 4rem 0;
+            background: var(--white);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+            background: var(--white);
+            border: 1px solid var(--border-color);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--light-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 4rem 0;
+            background: var(--light-bg);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 1.1rem;
+        }
+
+        /* Learning Paths */
+        .learning-paths {
+            padding: 4rem 0;
+            background: var(--white);
+        }
+
+        .paths-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .path-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .path-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .path-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .path-duration {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .path-body {
+            padding: 1.5rem;
+        }
+
+        .path-features {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .path-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .path-features li:last-child {
+            border-bottom: none;
+        }
+
+        .path-features i {
+            color: var(--success-color);
+        }
+
+        /* Section Header */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .section-header p {
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Languages Section */
+        .languages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .language-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .language-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .language-header {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .language-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .language-body {
+            padding: 1.5rem;
+        }
+
+        .language-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .language-description {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .language-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .language-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .language-features li:last-child {
+            border-bottom: none;
+        }
+
+        .language-features i {
+            color: var(--success-color);
+        }
+
+        /* Courses Section */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .course-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .course-thumbnail {
+            height: 180px;
+            background: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 3rem;
+        }
+
+        .course-info {
+            padding: 1.5rem;
+        }
+
+        .course-info h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .course-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Tutorials Section */
+        .tutorials-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .tutorial-item {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            gap: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .tutorial-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .tutorial-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--light-bg);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .tutorial-content {
+            flex: 1;
+        }
+
+        .tutorial-content h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .tutorial-meta {
+            display: flex;
+            gap: 1rem;
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .tutorial-description {
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--light-bg);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+
+        .progress-text {
+            font-size: 0.8rem;
+            color: #6b7280;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-thumbnail {
+            height: 200px;
+            background: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 3rem;
+        }
+
+        .project-info {
+            padding: 1.5rem;
+        }
+
+        .project-info h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-description {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        /* Challenges Section */
+        .challenges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .challenge-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .challenge-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .challenge-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .challenge-difficulty {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .difficulty-easy {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .difficulty-medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .difficulty-hard {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .challenge-body {
+            padding: 1.5rem;
+        }
+
+        .challenge-stats {
+            display: flex;
+            justify-content: space-between;
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Community Section */
+        .community-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .forum-posts {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .forum-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .post-item:last-child {
+            border-bottom: none;
+        }
+
+        .post-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .post-content {
+            flex: 1;
+        }
+
+        .post-title {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 1rem;
+            color: #6b7280;
+            font-size: 0.8rem;
+        }
+
+        /* AI Assistant */
+        .ai-assistant {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-top: 2rem;
+        }
+
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .ai-header i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .chat-container {
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: var(--light-bg);
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+
+        .user-message {
+            background: var(--primary-color);
+            color: white;
+            margin-left: auto;
+        }
+
+        .ai-message {
+            background: var(--white);
+            border: 1px solid #e5e7eb;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        /* Code Examples */
+        .code-examples {
+            background: var(--dark-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .code-header {
+            background: #2d3748;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .code-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .code-action-btn {
+            background: none;
+            border: none;
+            color: #a0aec0;
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            transition: background 0.3s;
+        }
+
+        .code-action-btn:hover {
+            background: #4a5568;
+        }
+
+        .code-content {
+            padding: 1.5rem;
+            overflow-x: auto;
+        }
+
+        pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .code-example {
+            margin-bottom: 2rem;
+        }
+
+        .code-example h4 {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-top: 2rem;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .admin-tabs {
+            display: flex;
+            border-bottom: 1px solid #e5e7eb;
+            margin-bottom: 1.5rem;
+        }
+
+        .admin-tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .admin-tab.active {
+            border-bottom-color: var(--admin-color);
+            color: var(--admin-color);
+            font-weight: 500;
+        }
+
+        .admin-content {
+            display: none;
+        }
+
+        .admin-content.active {
+            display: block;
+        }
+
+        .admin-form {
+            background: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .content-item {
+            background: var(--light-bg);
+            padding: 1rem;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .content-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Profile Section */
+        .profile-header {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .profile-info h2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .achievement-card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .achievement-icon {
+            font-size: 2rem;
+            color: var(--warning-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-color);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: #d1d5db;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #374151;
+            color: #9ca3af;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            animation: modalFadeIn 0.3s;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: var(--white);
+            border-radius: 10px 10px 0 0;
+        }
+
+        .modal-header h2 {
+            color: var(--text-color);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+            transition: color 0.3s;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-btn:hover {
+            background-color: #f3f4f6;
+            color: var(--error-color);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .forgot-password {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .auth-divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .auth-divider::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 45%;
+            height: 1px;
+            background-color: #e5e7eb;
+        }
+
+        .auth-divider::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 45%;
+            height: 1px;
+            background-color: #e5e7eb;
+        }
+
+        .auth-divider span {
+            background-color: var(--white);
+            padding: 0 1rem;
+            color: #6b7280;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 5px;
+            background: var(--white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .social-btn:hover {
+            background: var(--light-bg);
+            transform: translateY(-2px);
+        }
+
+        .switch-auth {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #6b7280;
+        }
+
+        .switch-auth a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .switch-auth a:hover {
+            text-decoration: underline;
+        }
+
+        /* User Profile */
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .user-profile:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .user-role {
+            font-size: 0.8rem;
+            color: #6b7280;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 5px;
+            color: white;
+            font-weight: 500;
+            z-index: 1100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            animation: toastSlideIn 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            max-width: 400px;
+        }
+
+        @keyframes toastSlideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .toast-success {
+            background-color: var(--success-color);
+        }
+
+        .toast-error {
+            background-color: var(--error-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .auth-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .auth-buttons .btn {
+                width: 100%;
+            }
+
+            .languages-grid, .courses-grid, .projects-grid, .challenges-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .course-actions, .tutorial-item {
+                flex-direction: column;
+            }
+
+            .social-login {
+                flex-direction: column;
+            }
+
+            .tutorial-item {
+                flex-direction: column;
+            }
+
+            .tutorial-icon {
+                align-self: flex-start;
+            }
+
+            .admin-tabs {
+                flex-wrap: wrap;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Admin Controls */
+        .admin-controls {
+            display: none;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .admin-controls.active {
+            display: block;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo" onclick="showPage('home')">
+                    <i class="fas fa-code"></i>
+                    <span>CodeLearn</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-link active" onclick="showPage('home')">الرئيسية</a></li>
+                    <li><a href="#" class="nav-link" onclick="showPage('languages')">اللغات البرمجية</a></li>
+                    <li><a href="#" class="nav-link" onclick="showPage('courses')">الدروس</a></li>
+                    <li><a href="#" class="nav-link" onclick="showPage('projects')">المشاريع</a></li>
+                    <li><a href="#" class="nav-link" onclick="showPage('challenges')">التحديات</a></li>
+                    <li><a href="#" class="nav-link" onclick="showPage('community')">المجتمع</a></li>
+                    <li><a href="#" class="nav-link" id="adminLink" style="display: none;" onclick="showPage('admin')">لوحة التحكم</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <button class="theme-toggle" id="themeToggle" title="تبديل الوضع الليلي">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="btn btn-outline" id="loginBtn">تسجيل الدخول</button>
+                    <button class="btn btn-primary" id="signupBtn">إنشاء حساب</button>
+                    <div id="userProfile" style="display: none;">
+                        <div class="user-profile" onclick="showPage('profile')">
+                            <div class="user-avatar" id="userAvatar">م</div>
+                            <div>
+                                <div id="userName">مستخدم</div>
+                                <div class="user-role" id="userRole">مستخدم</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- الصفحة الرئيسية -->
+    <div id="home" class="page active">
+        <section class="hero">
+            <div class="container">
+                <h1>منصة تعلم البرمجة المدعومة بالذكاء الاصطناعي</h1>
+                <p>تعلم البرمجة بسهولة مع دروس تفاعلية، فيديوهات، ومساعد ذكي يجيب على أسئلتك</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary btn-large" onclick="showPage('courses')">ابدأ التعلم الآن</a>
+                    <a href="#" class="btn btn-outline" onclick="showPage('challenges')">جرب التحديات</a>
+                    <a href="#" class="btn btn-outline" onclick="showPage('projects')">استكشف المشاريع</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2>لماذا تختار CodeLearn؟</h2>
+                    <p>منصة متكاملة تجمع بين أحدث تقنيات التعليم والتجربة التفاعلية</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3>مساعد ذكي</h3>
+                        <p>مساعد ذكي يجيب على أسئلتك البرمجية فوراً ويساعدك في حل المشكلات</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3>مختبر أكواد</h3>
+                        <p>محرر أكواد متكامل في المتصفح لتجربة الأكواد فوراً دون إعدادات معقدة</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-road"></i>
+                        </div>
+                        <h3>مسارات تعليمية</h3>
+                        <p>مسارات مخصصة تناسب أهدافك ومستواك مع تقدم محدد وواضح</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3>نظام المكافآت</h3>
+                        <p>احصل على نقاط وشارات عند إكمال الدروس والتحديات</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>مجتمع تفاعلي</h3>
+                        <p>انضم إلى مجتمع من المتعلمين والمطورين وشارك في المناقشات</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h3>توجيه مهني</h3>
+                        <p>استعد لسوق العمل مع مشاريع عملية وتوجيه مهني متخصص</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="container">
+                <div class="section-header">
+                    <h2>إحصائيات المنصة</h2>
+                    <p>انضم إلى آلاف المتعلمين الذين بدأوا رحلتهم البرمجية معنا</p>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">25,000+</div>
+                        <div class="stat-label">متعلم نشط</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">50,000+</div>
+                        <div class="stat-label">درس مكتمل</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">10,000+</div>
+                        <div class="stat-label">مشروع منفذ</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">100,000+</div>
+                        <div class="stat-label">تحدي محلول</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="learning-paths">
+            <div class="container">
+                <div class="section-header">
+                    <h2>مسارات التعلم الشاملة</h2>
+                    <p>اختر المسار الذي يناسب أهدافك وابدأ رحلتك البرمجية</p>
+                </div>
+                <div class="paths-grid">
+                    <div class="path-card">
+                        <div class="path-header">
+                            <span class="path-duration">6 أشهر</span>
+                            <h3>مطور ويب متكامل</h3>
+                        </div>
+                        <div class="path-body">
+                            <p>مسار متكامل لتعلم تطوير الويب من الصفر إلى الاحتراف</p>
+                            <ul class="path-features">
+                                <li><i class="fas fa-check"></i> HTML, CSS, JavaScript</li>
+                                <li><i class="fas fa-check"></i> React و Node.js</li>
+                                <li><i class="fas fa-check"></i> قواعد البيانات</li>
+                                <li><i class="fas fa-check"></i> 5 مشاريع عملية</li>
+                                <li><i class="fas fa-check"></i> إعداد للسوق العمل</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary btn-block" onclick="showPage('courses')">ابدأ المسار</a>
+                        </div>
+                    </div>
+                    <div class="path-card">
+                        <div class="path-header">
+                            <span class="path-duration">4 أشهر</span>
+                            <h3>مطور تطبيقات</h3>
+                        </div>
+                        <div class="path-body">
+                            <p>تخصص في تطوير تطبيقات الجوال والويب المتقدمة</p>
+                            <ul class="path-features">
+                                <li><i class="fas fa-check"></i> React Native</li>
+                                <li><i class="fas fa-check"></i> تطوير APIs</li>
+                                <li><i class="fas fa-check"></i> قواعد البيانات المتقدمة</li>
+                                <li><i class="fas fa-check"></i> 3 تطبيقات كاملة</li>
+                                <li><i class="fas fa-check"></i> نشر التطبيقات</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary btn-block" onclick="showPage('courses')">ابدأ المسار</a>
+                        </div>
+                    </div>
+                    <div class="path-card">
+                        <div class="path-header">
+                            <span class="path-duration">5 أشهر</span>
+                            <h3>علم البيانات</h3>
+                        </div>
+                        <div class="path-body">
+                            <p>احترف تحليل البيانات والتعلم الآلي باستخدام Python</p>
+                            <ul class="path-features">
+                                <li><i class="fas fa-check"></i> Python المتقدم</li>
+                                <li><i class="fas fa-check"></i> Pandas و NumPy</li>
+                                <li><i class="fas fa-check"></i> التعلم الآلي</li>
+                                <li><i class="fas fa-check"></i> 4 مشاريع تحليل بيانات</li>
+                                <li><i class="fas fa-check"></i> تصور البيانات</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary btn-block" onclick="showPage('courses')">ابدأ المسار</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- صفحة اللغات البرمجية -->
+    <div id="languages" class="page">
+        <div class="container">
+            <div class="section-header">
+                <h1>اللغات البرمجية</h1>
+                <p>اختر اللغة التي تريد تعلمها وابدأ رحلتك في عالم البرمجة</p>
+            </div>
+
+            <div class="admin-controls" id="languagesAdminControls">
+                <h3><i class="fas fa-cog"></i> إدارة اللغات البرمجية</h3>
+                <div class="control-buttons">
+                    <button class="btn btn-success" onclick="showModal('addLanguageModal')">
+                        <i class="fas fa-plus"></i> إضافة لغة جديدة
+                    </button>
+                </div>
+            </div>
+
+            <div class="languages-grid" id="languagesContainer">
+                <!-- المحتوى سيتم تحميله ديناميكياً -->
+            </div>
+
+            <div class="guest-message" id="languagesGuestMessage" style="display: none;">
+                <h2>⏳ يرجى تسجيل الدخول</h2>
+                <p>لمشاهدة محتوى اللغات البرمجية، يرجى تسجيل الدخول إلى حسابك</p>
+                <button class="btn btn-primary btn-large" onclick="showLoginModal()">تسجيل الدخول</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحة الدروس -->
+    <div id="courses" class="page">
+        <div class="container">
+            <div class="section-header">
+                <h1>الدروس التفاعلية</h1>
+                <p>استكشف مكتبتنا الواسعة من الدروس التفاعلية والمواد التعليمية</p>
+            </div>
+
+            <div class="admin-controls" id="coursesAdminControls">
+                <h3><i class="fas fa-cog"></i> إدارة الدروس</h3>
+                <div class="control-buttons">
+                    <button class="btn btn-success" onclick="showModal('addCourseModal')">
+                        <i class="fas fa-plus"></i> إضافة درس جديد
+                    </button>
+                </div>
+            </div>
+
+            <div class="tutorials-list">
+                <div class="tutorial-item">
+                    <div class="tutorial-icon">
+                        <i class="fab fa-js"></i>
+                    </div>
+                    <div class="tutorial-content">
+                        <h3>JavaScript للمبتدئين</h3>
+                        <div class="tutorial-meta">
+                            <span><i class="far fa-clock"></i> 8 ساعات</span>
+                            <span><i class="fas fa-tasks"></i> 24 تمرين</span>
+                            <span><i class="fas fa-star"></i> 4.8</span>
+                        </div>
+                        <p class="tutorial-description">
+                            تعلم أساسيات JavaScript من الصفر، بما في ذلك المتغيرات، الدوال، الكائنات والمزيد.
+                        </p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 30%"></div>
+                        </div>
+                        <div class="progress-text">30% مكتمل</div>
+                    </div>
+                    <div class="tutorial-actions">
+                        <button class="btn btn-primary">استمرار التعلم</button>
+                        <button class="btn btn-outline" onclick="downloadPDF('javascript-basics')">
+                            <i class="fas fa-file-pdf"></i> PDF
+                        </button>
+                    </div>
+                </div>
+                <div class="tutorial-item">
+                    <div class="tutorial-icon">
+                        <i class="fab fa-python"></i>
+                    </div>
+                    <div class="tutorial-content">
+                        <h3>Python وتطبيقاتها</h3>
+                        <div class="tutorial-meta">
+                            <span><i class="far fa-clock"></i> 12 ساعة</span>
+                            <span><i class="fas fa-tasks"></i> 36 تمرين</span>
+                            <span><i class="fas fa-star"></i> 4.9</span>
+                        </div>
+                        <p class="tutorial-description">
+                            دورة شاملة لتعلم Python من الأساسيات إلى التطبيقات المتقدمة مثل تحليل البيانات.
+                        </p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 65%"></div>
+                        </div>
+                        <div class="progress-text">65% مكتمل</div>
+                    </div>
+                    <div class="tutorial-actions">
+                        <button class="btn btn-primary">استمرار التعلم</button>
+                        <button class="btn btn-outline" onclick="downloadPDF('python-applications')">
+                            <i class="fas fa-file-pdf"></i> PDF
+                        </button>
+                    </div>
+                </div>
+                <div class="tutorial-item">
+                    <div class="tutorial-icon">
+                        <i class="fab fa-html5"></i>
+                    </div>
+                    <div class="tutorial-content">
+                        <h3>تطوير الواجهات الأمامية</h3>
+                        <div class="tutorial-meta">
+                            <span><i class="far fa-clock"></i> 10 ساعات</span>
+                            <span><i class="fas fa-tasks"></i> 30 تمرين</span>
+                            <span><i class="fas fa-star"></i> 4.7</span>
+                        </div>
+                        <p class="tutorial-description">
+                            تعلم HTML, CSS, وJavaScript لإنشاء مواقع ويب تفاعلية وجذابة.
+                        </p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 20%"></div>
+                        </div>
+                        <div class="progress-text">20% مكتمل</div>
+                    </div>
+                    <div class="tutorial-actions">
+                        <button class="btn btn-primary">استمرار التعلم</button>
+                        <button class="btn btn-outline" onclick="downloadPDF('frontend-development')">
+                            <i class="fas fa-file-pdf"></i> PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-header" style="margin-top: 4rem;">
+                <h2>دروس جديدة</h2>
+                <p>استكشف أحدث الدروس المضافة إلى المنصة</p>
+            </div>
+            <div class="courses-grid" id="coursesContainer">
+                <!-- المحتوى سيتم تحميله ديناميكياً -->
+            </div>
+
+            <div class="guest-message" id="coursesGuestMessage" style="display: none;">
+                <h2>🔐 محتوى خاص بالأعضاء</h2>
+                <p>الدروس التفاعلية متاحة فقط للأعضاء المسجلين في المنصة</p>
+                <button class="btn btn-primary btn-large" onclick="showLoginModal()">تسجيل الدخول للوصول</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحة المشاريع -->
+    <div id="projects" class="page">
+        <div class="container">
+            <div class="section-header">
+                <h1>المشاريع العملية</h1>
+                <p>طبق ما تعلمته من خلال مشاريع حقيقية تطور مهاراتك البرمجية</p>
+            </div>
+
+            <div class="admin-controls" id="projectsAdminControls">
+                <h3><i class="fas fa-cog"></i> إدارة المشاريع</h3>
+                <div class="control-buttons">
+                    <button class="btn btn-success" onclick="showModal('addProjectModal')">
+                        <i class="fas fa-plus"></i> إضافة مشروع جديد
+                    </button>
+                </div>
+            </div>
+
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-thumbnail">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>متجر إلكتروني</h3>
+                        <div class="project-meta">
+                            <span><i class="fas fa-code"></i> HTML, CSS, JS</span>
+                            <span><i class="fas fa-signal"></i> مبتدئ</span>
+                        </div>
+                        <p class="project-description">
+                            أنشئ متجر إلكتروني بسيط باستخدام HTML وCSS وJavaScript. تعلم كيفية إدارة المنتجات وعربة التسوق.
+                        </p>
+                        <div class="course-actions">
+                            <button class="btn btn-primary">بدء المشروع</button>
+                            <button class="btn btn-outline">عرض النموذج</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-thumbnail">
+                        <i class="fas fa-thermometer-half"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>تطبيق الطقس</h3>
+                        <div class="project-meta">
+                            <span><i class="fas fa-code"></i> React, API</span>
+                            <span><i class="fas fa-signal"></i> متوسط</span>
+                        </div>
+                        <p class="project-description">
+                            بناء تطبيق طقس تفاعلي باستخدام React واستدعاء APIs خارجية. تعلم كيفية التعامل مع البيانات الديناميكية.
+                        </p>
+                        <div class="course-actions">
+                            <button class="btn btn-primary">بدء المشروع</button>
+                            <button class="btn btn-outline">عرض النموذج</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-thumbnail">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>مدير المهام</h3>
+                        <div class="project-meta">
+                            <span><i class="fas fa-code"></i> Node.js, MongoDB</span>
+                            <span><i class="fas fa-signal"></i> متقدم</span>
+                        </div>
+                        <p class="project-description">
+                            تطبيق كامل لإدارة المهام مع واجهة أمامية وخلفية. تعلم تطوير تطبيقات كاملة stack.
+                        </p>
+                        <div class="course-actions">
+                            <button class="btn btn-primary">بدء المشروع</button>
+                            <button class="btn btn-outline">عرض النموذج</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="guest-message" id="projectsGuestMessage" style="display: none;">
+                <h2>🚀 ابدأ مشاريعك البرمجية</h2>
+                <p>سجل الدخول للوصول إلى المشاريع العملية وتطبيق ما تعلمته</p>
+                <button class="btn btn-primary btn-large" onclick="showLoginModal()">تسجيل الدخول</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحة التحديات -->
+    <div id="challenges" class="page">
+        <div class="container">
+            <div class="section-header">
+                <h1>التحديات البرمجية</h1>
+                <p>اختبر مهاراتك البرمجية مع تحديات متنوعة المستويات</p>
+            </div>
+
+            <div class="admin-controls" id="challengesAdminControls">
+                <h3><i class="fas fa-cog"></i> إدارة التحديات</h3>
+                <div class="control-buttons">
+                    <button class="btn btn-success" onclick="showModal('addChallengeModal')">
+                        <i class="fas fa-plus"></i> إضافة تحدي جديد
+                    </button>
+                </div>
+            </div>
+
+            <div class="challenges-grid">
+                <div class="challenge-card">
+                    <div class="challenge-header">
+                        <span class="challenge-difficulty difficulty-easy">سهل</span>
+                        <h3>تحويل درجة الحرارة</h3>
+                    </div>
+                    <div class="challenge-body">
+                        <p>اكتب دالة لتحويل درجة الحرارة من فهرنهايت إلى مئوية والعكس.</p>
+                        <div class="challenge-stats">
+                            <span><i class="fas fa-users"></i> 1,245 محاولة</span>
+                            <span><i class="fas fa-check-circle"></i> 87% نجاح</span>
+                        </div>
+                        <button class="btn btn-primary">حل التحدي</button>
+                    </div>
+                </div>
+                <div class="challenge-card">
+                    <div class="challenge-header">
+                        <span class="challenge-difficulty difficulty-medium">متوسط</span>
+                        <h3>تحليل النص</h3>
+                    </div>
+                    <div class="challenge-body">
+                        <p>أنشئ دالة تحسب عدد الكلمات والحروف والجمل في نص معين.</p>
+                        <div class="challenge-stats">
+                            <span><i class="fas fa-users"></i> 892 محاولة</span>
+                            <span><i class="fas fa-check-circle"></i> 65% نجاح</span>
+                        </div>
+                        <button class="btn btn-primary">حل التحدي</button>
+                    </div>
+                </div>
+                <div class="challenge-card">
+                    <div class="challenge-header">
+                        <span class="challenge-difficulty difficulty-hard">صعب</span>
+                        <h3>مولد كلمات المرور</h3>
+                    </div>
+                    <div class="challenge-body">
+                        <p>صمم دالة لتوليد كلمات مرور عشوائية آمنة مع خيارات تخصيص.</p>
+                        <div class="challenge-stats">
+                            <span><i class="fas fa-users"></i> 543 محاولة</span>
+                            <span><i class="fas fa-check-circle"></i> 42% نجاح</span>
+                        </div>
+                        <button class="btn btn-primary">حل التحدي</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- مساعد الذكاء الاصطناعي -->
+            <div class="section" style="margin-top: 4rem;">
+                <div class="section-header">
+                    <h2>مساعد الذكاء الاصطناعي</h2>
+                    <p>اطرح أسئلتك البرمجية واحصل على إجابات فورية من مساعدنا الذكي</p>
+                </div>
+                <div class="ai-assistant">
+                    <div class="ai-header">
+                        <i class="fas fa-robot"></i>
+                        <h3>مساعد CodeLearn</h3>
+                    </div>
+                    <div class="chat-container" id="chatContainer">
+                        <div class="message ai-message">
+                            مرحباً! أنا مساعد CodeLearn. كيف يمكنني مساعدتك في رحلتك البرمجية اليوم؟
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="chatInput" placeholder="اكتب سؤالك هنا...">
+                        <button class="btn btn-primary" id="sendMessageBtn"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="guest-message" id="challengesGuestMessage" style="display: none;">
+                <h2>💪 تحدى نفسك</h2>
+                <p>سجل الدخول للوصول إلى التحديات البرمجية ومختبر الأكواد</p>
+                <button class="btn btn-primary btn-large" onclick="showLoginModal()">سجل الدخول للتحدي</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحة المجتمع -->
+    <div id="community" class="page">
+        <div class="container">
+            <div class="section-header">
+                <h1>مجتمع CodeLearn</h1>
+                <p>انضم إلى مجتمعنا النشط من المبرمجين والمتعلمين</p>
+            </div>
+            <div class="community-stats">
+                <div class="stat-card">
+                    <div class="stat-number">12,548</div>
+                    <div class="stat-label">متعلم نشط</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3,742</div>
+                    <div class="stat-label">مشروع مكتمل</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">856</div>
+                    <div class="stat-label">مدرس معتمد</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24,963</div>
+                    <div class="stat-label">سؤال تمت الإجابة عليه</div>
+                </div>
+            </div>
+            <div class="forum-posts">
+                <div class="forum-header">
+                    <h3>أحدث المناقشات</h3>
+                    <button class="btn btn-outline">عرض الكل</button>
+                </div>
+                <div class="post-item">
+                    <div class="post-avatar">م</div>
+                    <div class="post-content">
+                        <div class="post-title">ما هي أفضل طريقة لتعلم React في 2023؟</div>
+                        <div class="post-meta">
+                            <span>منذ 3 ساعات</span>
+                            <span>24 رد</span>
+                            <span>154 مشاهدة</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-item">
+                    <div class="post-avatar">س</div>
+                    <div class="post-content">
+                        <div class="post-title">مساعدة في مشكلة في JavaScript مع المصفوفات</div>
+                        <div class="post-meta">
+                            <span>منذ 5 ساعات</span>
+                            <span>18 رد</span>
+                            <span>98 مشاهدة</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-item">
+                    <div class="post-avatar">أ</div>
+                    <div class="post-content">
+                        <div class="post-title">أفضل أدوات تطوير الواجهات الأمامية</div>
+                        <div class="post-meta">
+                            <span>منذ يوم</span>
+                            <span>42 رد</span>
+                            <span>321 مشاهدة</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحات الملف الشخصي ولوحة التحكم تبقى كما كانت -->
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>CodeLearn</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="showPage('home')">الرئيسية</a></li>
+                        <li><a href="#">عن المنصة</a></li>
+                        <li><a href="#">فريق العمل</a></li>
+                        <li><a href="#">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>التعلم</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="showPage('languages')">اللغات البرمجية</a></li>
+                        <li><a href="#" onclick="showPage('courses')">الدروس</a></li>
+                        <li><a href="#" onclick="showPage('projects')">المشاريع</a></li>
+                        <li><a href="#" onclick="showPage('challenges')">التحديات</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>المجتمع</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="showPage('community')">المنتدى</a></li>
+                        <li><a href="#">المدونة</a></li>
+                        <li><a href="#">الفعاليات</a></li>
+                        <li><a href="#">المدرسون</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>الدعم</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">الأسئلة الشائعة</a></li>
+                        <li><a href="#">المساعدة</a></li>
+                        <li><a href="#">الشروط والأحكام</a></li>
+                        <li><a href="#">سياسة الخصوصية</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>تابعنا</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fab fa-twitter"></i> تويتر</a></li>
+                        <li><a href="#"><i class="fab fa-facebook"></i> فيسبوك</a></li>
+                        <li><a href="#"><i class="fab fa-youtube"></i> يوتيوب</a></li>
+                        <li><a href="#"><i class="fab fa-github"></i> جيت هاب</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2023 CodeLearn. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>تسجيل الدخول</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">البريد الإلكتروني</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">كلمة المرور</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <div class="form-options">
+                        <div class="remember-me">
+                            <input type="checkbox" id="rememberMe">
+                            <label for="rememberMe">تذكرني</label>
+                        </div>
+                        <a href="#" class="forgot-password">نسيت كلمة المرور؟</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">تسجيل الدخول</button>
+                </form>
+                <div class="auth-divider">
+                    <span>أو</span>
+                </div>
+                <div class="social-login">
+                    <button class="social-btn">
+                        <i class="fab fa-google" style="color: #DB4437;"></i>
+                        <span>جوجل</span>
+                    </button>
+                    <button class="social-btn">
+                        <i class="fab fa-github"></i>
+                        <span>جيت هاب</span>
+                    </button>
+                </div>
+                <div class="switch-auth">
+                    <p>ليس لديك حساب؟ <a href="#" id="switchToSignup">إنشاء حساب</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>إنشاء حساب</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="signupForm">
+                    <div class="form-group">
+                        <label for="signupName">الاسم الكامل</label>
+                        <input type="text" id="signupName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupEmail">البريد الإلكتروني</label>
+                        <input type="email" id="signupEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPassword">كلمة المرور</label>
+                        <input type="password" id="signupPassword" required minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">تأكيد كلمة المرور</label>
+                        <input type="password" id="confirmPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userRoleSelect">نوع الحساب</label>
+                        <select id="userRoleSelect">
+                            <option value="user">مستخدم عادي</option>
+                            <option value="admin">مدير</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">إنشاء حساب</button>
+                </form>
+                <div class="auth-divider">
+                    <span>أو</span>
+                </div>
+                <div class="social-login">
+                    <button class="social-btn">
+                        <i class="fab fa-google" style="color: #DB4437;"></i>
+                        <span>جوجل</span>
+                    </button>
+                    <button class="social-btn">
+                        <i class="fab fa-github"></i>
+                        <span>جيت هاب</span>
+                    </button>
+                </div>
+                <div class="switch-auth">
+                    <p>لديك حساب بالفعل؟ <a href="#" id="switchToLogin">تسجيل الدخول</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال إضافة لغة -->
+    <div class="modal" id="addLanguageModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-plus"></i> إضافة لغة برمجية جديدة</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addLanguageForm">
+                    <div class="form-group">
+                        <label for="languageName">اسم اللغة</label>
+                        <input type="text" id="languageName" required placeholder="مثال: JavaScript">
+                    </div>
+                    <div class="form-group">
+                        <label for="languageDescription">وصف اللغة</label>
+                        <textarea id="languageDescription" required placeholder="وصف مختصر عن اللغة ومجال استخدامها..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="languageIcon">أيقونة اللغة</label>
+                        <select id="languageIcon" required>
+                            <option value="fab fa-js">JavaScript</option>
+                            <option value="fab fa-python">Python</option>
+                            <option value="fab fa-html5">HTML</option>
+                            <option value="fab fa-css3-alt">CSS</option>
+                            <option value="fab fa-react">React</option>
+                            <option value="fab fa-node-js">Node.js</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="languageColor">لون اللغة</label>
+                        <input type="color" id="languageColor" value="#2563eb">
+                    </div>
+                    <div class="form-group">
+                        <label for="languageDifficulty">صعوبة التعلم</label>
+                        <select id="languageDifficulty" required>
+                            <option value="easy">سهل</option>
+                            <option value="medium">متوسط</option>
+                            <option value="hard">صعب</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">إضافة اللغة</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال إضافة درس -->
+    <div class="modal" id="addCourseModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-plus"></i> إضافة درس جديد</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addCourseForm">
+                    <input type="hidden" id="courseId">
+                    <div class="form-group">
+                        <label for="courseTitle">عنوان الدرس</label>
+                        <input type="text" id="courseTitle" required placeholder="مثال: أساسيات JavaScript">
+                    </div>
+                    <div class="form-group">
+                        <label for="courseDescription">وصف الدرس</label>
+                        <textarea id="courseDescription" required placeholder="وصف مفصل عن محتوى الدرس..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="courseLanguage">اللغة البرمجية</label>
+                        <select id="courseLanguage" required>
+                            <option value="javascript">JavaScript</option>
+                            <option value="python">Python</option>
+                            <option value="html">HTML</option>
+                            <option value="css">CSS</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="courseDuration">مدة الدرس (دقائق)</label>
+                        <input type="number" id="courseDuration" required min="1" placeholder="30">
+                    </div>
+                    <div class="form-group">
+                        <label for="courseDifficulty">صعوبة الدرس</label>
+                        <select id="courseDifficulty" required>
+                            <option value="easy">سهل</option>
+                            <option value="medium">متوسط</option>
+                            <option value="hard">صعب</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="courseContent">محتوى الدرس</label>
+                        <textarea id="courseContent" required placeholder="المحتوى التفصيلي للدرس..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" id="courseSubmitBtn">إضافة الدرس</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script>
+        // نظام إدارة الصفحات
+        function showPage(pageId) {
+            // إخفاء جميع الصفحات
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // إظهار الصفحة المطلوبة
+            document.getElementById(pageId).classList.add('active');
+            
+            // تحديث الروابط النشطة
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // إضافة النشاط للرابط المناسب
+            const activeLink = Array.from(document.querySelectorAll('.nav-link')).find(
+                link => link.getAttribute('onclick') === `showPage('${pageId}')`
+            );
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            // إعادة تهيئة المكونات الخاصة بالصفحة
+            initializePageComponents(pageId);
+        }
+
+        // تهيئة مكونات الصفحة
+        function initializePageComponents(pageId) {
+            switch(pageId) {
+                case 'challenges':
+                    initializeChatBot();
+                    break;
+                case 'admin':
+                    initializeAdminPanel();
+                    break;
+                case 'profile':
+                    loadProfileData();
+                    break;
+            }
+            
+            // تهيئة Highlight.js للأكواد
+            if (typeof hljs !== 'undefined') {
+                hljs.highlightAll();
+            }
+        }
+
+        // نظام إدارة المستخدمين
+        const UserManager = {
+            currentUser: null,
+
+            init() {
+                this.loadUserState();
+                this.setupAuthHandlers();
+                this.setupAdminControls();
+            },
+
+            loadUserState() {
+                const savedUser = localStorage.getItem('currentUser');
+                if (savedUser) {
+                    this.currentUser = JSON.parse(savedUser);
+                    this.updateUI();
+                }
+            },
+
+            setupAuthHandlers() {
+                // تسجيل الدخول
+                document.getElementById('loginBtn').addEventListener('click', () => {
+                    this.showLoginModal();
+                });
+
+                // إنشاء حساب
+                document.getElementById('signupBtn').addEventListener('click', () => {
+                    this.showSignupModal();
+                });
+
+                // نماذج المصادقة
+                document.getElementById('loginForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleLogin();
+                });
+
+                document.getElementById('signupForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleSignup();
+                });
+
+                // التبديل بين النماذج
+                document.getElementById('switchToSignup').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.showSignupModal();
+                });
+
+                document.getElementById('switchToLogin').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.showLoginModal();
+                });
+
+                // إغلاق النماذج
+                document.querySelectorAll('.close-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.closeModals();
+                    });
+                });
+            },
+
+            setupAdminControls() {
+                // إظهار أزرار الإدارة للمدير فقط
+                this.toggleAdminControls();
+            },
+
+            toggleAdminControls() {
+                const adminControls = document.querySelectorAll('.admin-controls');
+                if (this.currentUser && this.currentUser.role === 'admin') {
+                    adminControls.forEach(control => {
+                        control.classList.add('active');
+                    });
+                } else {
+                    adminControls.forEach(control => {
+                        control.classList.remove('active');
+                    });
+                }
+            },
+
+            showLoginModal() {
+                document.getElementById('loginModal').style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            },
+
+            showSignupModal() {
+                document.getElementById('signupModal').style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            },
+
+            closeModals() {
+                document.getElementById('loginModal').style.display = 'none';
+                document.getElementById('signupModal').style.display = 'none';
+                document.getElementById('addLanguageModal').style.display = 'none';
+                document.getElementById('addCourseModal').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            },
+
+            handleLogin() {
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                const users = this.getUsers();
+                const user = users.find(u => u.email === email && u.password === password);
+                
+                if (user) {
+                    this.currentUser = user;
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    this.updateUI();
+                    this.closeModals();
+                    this.showToast(`مرحباً ${user.name}`, 'success');
+                } else {
+                    this.showToast('البريد الإلكتروني أو كلمة المرور غير صحيحة', 'error');
+                }
+            },
+
+            handleSignup() {
+                const name = document.getElementById('signupName').value;
+                const email = document.getElementById('signupEmail').value;
+                const password = document.getElementById('signupPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                const role = document.getElementById('userRoleSelect').value;
+                
+                if (password !== confirmPassword) {
+                    this.showToast('كلمات المرور غير متطابقة!', 'error');
+                    return;
+                }
+                
+                const users = this.getUsers();
+                
+                if (users.find(u => u.email === email)) {
+                    this.showToast('هذا البريد الإلكتروني مسجل بالفعل', 'error');
+                    return;
+                }
+
+                const newUser = {
+                    id: users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1,
+                    name: name,
+                    email: email,
+                    password: password,
+                    role: role,
+                    avatar: name.charAt(0),
+                    joinedAt: new Date().toISOString(),
+                    stats: {
+                        courses: 0,
+                        projects: 0,
+                        challenges: 0,
+                        points: 0
+                    }
+                };
+                
+                users.push(newUser);
+                this.saveUsers(users);
+
+                this.currentUser = newUser;
+                localStorage.setItem('currentUser', JSON.stringify(newUser));
+                this.updateUI();
+                this.closeModals();
+                this.showToast(`تم إنشاء الحساب بنجاح! مرحباً ${newUser.name}`, 'success');
+            },
+
+            logout() {
+                this.currentUser = null;
+                localStorage.removeItem('currentUser');
+                this.updateUI();
+                this.showToast('تم تسجيل الخروج بنجاح', 'success');
+            },
+
+            getUsers() {
+                return JSON.parse(localStorage.getItem('codelearn_users') || '[]');
+            },
+
+            saveUsers(users) {
+                localStorage.setItem('codelearn_users', JSON.stringify(users));
+            },
+
+            updateUI() {
+                const loginBtn = document.getElementById('loginBtn');
+                const signupBtn = document.getElementById('signupBtn');
+                const userProfile = document.getElementById('userProfile');
+                const adminLink = document.getElementById('adminLink');
+
+                if (this.currentUser) {
+                    loginBtn.style.display = 'none';
+                    signupBtn.style.display = 'none';
+                    userProfile.style.display = 'flex';
+                    
+                    document.getElementById('userName').textContent = this.currentUser.name;
+                    document.getElementById('userAvatar').textContent = this.currentUser.avatar;
+                    document.getElementById('userRole').textContent = this.currentUser.role === 'admin' ? 'مدير' : 'مستخدم';
+
+                    if (this.currentUser.role === 'admin') {
+                        adminLink.style.display = 'block';
+                    } else {
+                        adminLink.style.display = 'none';
+                    }
+                } else {
+                    loginBtn.style.display = 'block';
+                    signupBtn.style.display = 'block';
+                    userProfile.style.display = 'none';
+                    adminLink.style.display = 'none';
+                }
+
+                this.toggleAdminControls();
+                this.toggleGuestMessages();
+            },
+
+            toggleGuestMessages() {
+                const user = this.currentUser;
+                const pages = ['languages', 'courses', 'projects', 'challenges'];
+                
+                pages.forEach(page => {
+                    const container = document.getElementById(`${page}Container`);
+                    const guestMessage = document.getElementById(`${page}GuestMessage`);
+                    
+                    if (user) {
+                        if (container) container.style.display = 'grid';
+                        if (guestMessage) guestMessage.style.display = 'none';
+                    } else {
+                        if (container) container.style.display = 'none';
+                        if (guestMessage) guestMessage.style.display = 'block';
+                    }
+                });
+            },
+
+            showToast(message, type = 'success') {
+                const toast = document.createElement('div');
+                toast.className = `toast toast-${type}`;
+                toast.innerHTML = `
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                    <span>${message}</span>
+                `;
+                
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.remove();
+                }, 5000);
+            }
+        };
+
+        // مساعد الذكاء الاصطناعي
+        function initializeChatBot() {
+            const chatInput = document.getElementById('chatInput');
+            const sendMessageBtn = document.getElementById('sendMessageBtn');
+            const chatContainer = document.getElementById('chatContainer');
+            
+            sendMessageBtn.addEventListener('click', sendMessage);
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            function sendMessage() {
+                const message = chatInput.value.trim();
+                
+                if (message) {
+                    // إضافة رسالة المستخدم
+                    const userMessage = document.createElement('div');
+                    userMessage.className = 'message user-message';
+                    userMessage.textContent = message;
+                    chatContainer.appendChild(userMessage);
+                    
+                    // محاكاة رد المساعد
+                    setTimeout(() => {
+                        const aiMessage = document.createElement('div');
+                        aiMessage.className = 'message ai-message';
+                        
+                        const responses = {
+                            'javascript': 'JavaScript هي لغة برمجة عالية المستوى تستخدم principalmente لتطوير الويب التفاعلي. هي لغة مفسرة وليست مكتوبة.',
+                            'python': 'Python هي لغة برمجة عالية المستوى وسهلة التعلم. تتميز ببساطة كتابتها وقراءتها.',
+                            'html': 'HTML (لغة ترميز النص الفائق) هي اللغة الأساسية لإنشاء صفحات الويب. تحدد هيكل المحتوى.',
+                            'css': 'CSS (أوراق الأنماط المتتالية) تستخدم لتنسيق وتصميم صفحات الويب.',
+                            'react': 'React هي مكتبة JavaScript مفتوحة المصدر لبناء واجهات المستخدم، طورتها فيسبوك.'
+                        };
+                        
+                        let response = 'هذه إجابة محاكاة من المساعد الذكي. في التطبيق الحقيقي، سيكون هذا رداً من نموذج الذكاء الاصطناعي.';
+                        
+                        const lowerMessage = message.toLowerCase();
+                        for (const [keyword, answer] of Object.entries(responses)) {
+                            if (lowerMessage.includes(keyword)) {
+                                response = answer;
+                                break;
+                            }
+                        }
+                        
+                        aiMessage.textContent = response;
+                        chatContainer.appendChild(aiMessage);
+                        
+                        chatContainer.scrollTop = chatContainer.scrollHeight;
+                    }, 1000);
+                    
+                    chatInput.value = '';
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }
+            }
+        }
+
+        // نظام إدارة المحتوى
+        const ContentManager = {
+            init() {
+                this.loadAllContent();
+                this.setupContentListeners();
+            },
+
+            loadAllContent() {
+                this.loadLanguages();
+                this.loadCourses();
+            },
+
+            loadLanguages() {
+                const languages = JSON.parse(localStorage.getItem('codelearn-languages') || '[]');
+                
+                if (languages.length === 0) {
+                    // بيانات افتراضية
+                    const defaultLanguages = [
+                        {
+                            id: 1,
+                            name: "JavaScript",
+                            description: "لغة برمجة عالية المستوى تستخدم principalmente لتطوير الويب التفاعلي",
+                            icon: "fab fa-js",
+                            color: "#f7df1e",
+                            difficulty: "medium",
+                            students: 15000,
+                            rating: 4.8
+                        },
+                        {
+                            id: 2,
+                            name: "Python",
+                            description: "لغة برمجة عالية المستوى وسهلة التعلم. مثالية للمبتدئين",
+                            icon: "fab fa-python",
+                            color: "#3776ab",
+                            difficulty: "easy",
+                            students: 12000,
+                            rating: 4.9
+                        }
+                    ];
+                    localStorage.setItem('codelearn-languages', JSON.stringify(defaultLanguages));
+                    this.loadLanguages();
+                    return;
+                }
+
+                this.renderLanguages(languages);
+            },
+
+            renderLanguages(languages) {
+                const container = document.getElementById('languagesContainer');
+                if (!container) return;
+
+                container.innerHTML = languages.map(lang => `
+                    <div class="language-card">
+                        <div class="language-header" style="background: linear-gradient(135deg, ${lang.color}, ${this.darkenColor(lang.color)})">
+                            <div class="language-icon">
+                                <i class="${lang.icon}"></i>
+                            </div>
+                            <h3>${lang.name}</h3>
+                        </div>
+                        <div class="language-body">
+                            <div class="language-stats">
+                                <span><i class="fas fa-users"></i> ${lang.students} متعلم</span>
+                                <span><i class="fas fa-star"></i> ${lang.rating}</span>
+                            </div>
+                            <p class="language-description">${lang.description}</p>
+                            <ul class="language-features">
+                                <li><i class="fas fa-check"></i> تطوير الويب التفاعلي</li>
+                                <li><i class="fas fa-check"></i> تطوير تطبيقات الجوال</li>
+                                <li><i class="fas fa-check"></i> تطوير الألعاب</li>
+                                <li><i class="fas fa-check"></i> تطوير الخوادم</li>
+                            </ul>
+                            <div class="content-actions">
+                                <a href="#" class="btn btn-primary btn-block" onclick="showPage('courses')">ابدأ التعلم</a>
+                                ${UserManager.currentUser && UserManager.currentUser.role === 'admin' ? `
+                                    <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                                        <button class="btn btn-outline btn-small" onclick="ContentManager.editLanguage(${lang.id})">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-small" onclick="ContentManager.deleteLanguage(${lang.id})">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            },
+
+            loadCourses() {
+                const courses = JSON.parse(localStorage.getItem('codelearn-courses') || '[]');
+                this.renderCourses(courses);
+            },
+
+            renderCourses(courses) {
+                const container = document.getElementById('coursesContainer');
+                if (!container) return;
+
+                if (courses.length === 0) {
+                    container.innerHTML = `
+                        <div class="guest-message">
+                            <h2>📚 لا توجد دروس بعد</h2>
+                            <p>كن أول من يضيف درساً إلى المنصة</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = courses.map(course => `
+                    <div class="course-card">
+                        <div class="course-thumbnail">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <div class="course-info">
+                            <h3>${course.title}</h3>
+                            <div class="course-meta">
+                                <span><i class="far fa-clock"></i> ${course.duration} دقيقة</span>
+                                <span><i class="fas fa-signal"></i> ${this.getDifficultyText(course.difficulty)}</span>
+                            </div>
+                            <p>${course.description}</p>
+                            <div class="course-actions">
+                                <button class="btn btn-primary">عرض الدرس</button>
+                                <button class="btn btn-outline" onclick="downloadPDF('${course.id}')">
+                                    <i class="fas fa-file-pdf"></i> PDF
+                                </button>
+                                ${UserManager.currentUser && UserManager.currentUser.role === 'admin' ? `
+                                    <div style="display: flex; gap: 0.5rem;">
+                                        <button class="btn btn-outline btn-small" onclick="ContentManager.editCourse(${course.id})">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-small" onclick="ContentManager.deleteCourse(${course.id})">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            },
+
+            setupContentListeners() {
+                document.getElementById('addLanguageForm')?.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.addNewLanguage();
+                });
+
+                document.getElementById('addCourseForm')?.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.addNewCourse();
+                });
+            },
+
+            addNewLanguage() {
+                const formData = {
+                    name: document.getElementById('languageName').value,
+                    description: document.getElementById('languageDescription').value,
+                    icon: document.getElementById('languageIcon').value,
+                    color: document.getElementById('languageColor').value,
+                    difficulty: document.getElementById('languageDifficulty').value,
+                    students: Math.floor(Math.random() * 5000) + 1000,
+                    rating: (Math.random() * 0.5 + 4.5).toFixed(1)
+                };
+
+                const languages = JSON.parse(localStorage.getItem('codelearn-languages') || '[]');
+                formData.id = languages.length > 0 ? Math.max(...languages.map(l => l.id)) + 1 : 1;
+                
+                languages.push(formData);
+                localStorage.setItem('codelearn-languages', JSON.stringify(languages));
+                
+                this.loadLanguages();
+                UserManager.closeModals();
+                UserManager.showToast('تم إضافة اللغة بنجاح', 'success');
+            },
+
+            addNewCourse() {
+                const formData = {
+                    title: document.getElementById('courseTitle').value,
+                    description: document.getElementById('courseDescription').value,
+                    language: document.getElementById('courseLanguage').value,
+                    duration: parseInt(document.getElementById('courseDuration').value),
+                    difficulty: document.getElementById('courseDifficulty').value,
+                    content: document.getElementById('courseContent').value
+                };
+
+                const courses = JSON.parse(localStorage.getItem('codelearn-courses') || '[]');
+                formData.id = courses.length > 0 ? Math.max(...courses.map(c => c.id)) + 1 : 1;
+                
+                courses.push(formData);
+                localStorage.setItem('codelearn-courses', JSON.stringify(courses));
+                
+                this.loadCourses();
+                UserManager.closeModals();
+                UserManager.showToast('تم إضافة الدرس بنجاح', 'success');
+            },
+
+            editLanguage(id) {
+                const languages = JSON.parse(localStorage.getItem('codelearn-languages') || '[]');
+                const language = languages.find(l => l.id === id);
+                
+                if (language) {
+                    document.getElementById('languageName').value = language.name;
+                    document.getElementById('languageDescription').value = language.description;
+                    document.getElementById('languageIcon').value = language.icon;
+                    document.getElementById('languageColor').value = language.color;
+                    document.getElementById('languageDifficulty').value = language.difficulty;
+                    
+                    // هنا يمكن إضافة منطق التحديث
+                    UserManager.showToast(`جاري تحرير اللغة: ${language.name}`, 'info');
+                }
+            },
+
+            deleteLanguage(id) {
+                if (confirm('هل أنت متأكد من حذف هذه اللغة؟')) {
+                    const languages = JSON.parse(localStorage.getItem('codelearn-languages') || '[]');
+                    const updatedLanguages = languages.filter(lang => lang.id !== id);
+                    localStorage.setItem('codelearn-languages', JSON.stringify(updatedLanguages));
+                    this.loadLanguages();
+                    UserManager.showToast('تم حذف اللغة بنجاح', 'success');
+                }
+            },
+
+            editCourse(id) {
+                const courses = JSON.parse(localStorage.getItem('codelearn-courses') || '[]');
+                const course = courses.find(c => c.id === id);
+                
+                if (course) {
+                    document.getElementById('courseTitle').value = course.title;
+                    document.getElementById('courseDescription').value = course.description;
+                    document.getElementById('courseLanguage').value = course.language;
+                    document.getElementById('courseDuration').value = course.duration;
+                    document.getElementById('courseDifficulty').value = course.difficulty;
+                    document.getElementById('courseContent').value = course.content;
+                    
+                    UserManager.showToast(`جاري تحرير الدرس: ${course.title}`, 'info');
+                }
+            },
+
+            deleteCourse(id) {
+                if (confirm('هل أنت متأكد من حذف هذا الدرس؟')) {
+                    const courses = JSON.parse(localStorage.getItem('codelearn-courses') || '[]');
+                    const updatedCourses = courses.filter(course => course.id !== id);
+                    localStorage.setItem('codelearn-courses', JSON.stringify(updatedCourses));
+                    this.loadCourses();
+                    UserManager.showToast('تم حذف الدرس بنجاح', 'success');
+                }
+            },
+
+            darkenColor(color) {
+                return color.replace(/#/, '#1e');
+            },
+
+            getDifficultyText(difficulty) {
+                const texts = {
+                    'easy': 'سهل',
+                    'medium': 'متوسط', 
+                    'hard': 'صعب'
+                };
+                return texts[difficulty] || 'متوسط';
+            }
+        };
+
+        // نظام الثيم
+        const ThemeManager = {
+            init() {
+                this.currentTheme = localStorage.getItem('codelearn-theme') || 'light';
+                this.applyTheme(this.currentTheme);
+                this.setupThemeToggle();
+            },
+
+            applyTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('codelearn-theme', theme);
+                this.updateThemeIcon(theme);
+            },
+
+            setupThemeToggle() {
+                const toggleBtn = document.getElementById('themeToggle');
+                toggleBtn.addEventListener('click', () => {
+                    this.toggleTheme();
+                });
+            },
+
+            toggleTheme() {
+                this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+                this.applyTheme(this.currentTheme);
+            },
+
+            updateThemeIcon(theme) {
+                const icon = document.querySelector('#themeToggle i');
+                icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+            }
+        };
+
+        // دوال PDF
+        function downloadPDF(courseId) {
+            UserManager.showToast('جاري تحميل ملف PDF...', 'info');
+            // محاكاة تحميل PDF
+            setTimeout(() => {
+                UserManager.showToast('تم تحميل ملف PDF بنجاح', 'success');
+            }, 2000);
+        }
+
+        function showModal(modalId) {
+            if (modalId) {
+                document.getElementById(modalId).style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function showLoginModal() {
+            UserManager.showLoginModal();
+        }
+
+        // تهيئة التطبيق
+        document.addEventListener('DOMContentLoaded', function() {
+            // تهيئة الثيم
+            ThemeManager.init();
+            
+            // تهيئة نظام المستخدمين
+            UserManager.init();
+            
+            // تهيئة نظام المحتوى
+            ContentManager.init();
+            
+            // إعداد بيانات أولية
+            if (!localStorage.getItem('codelearn_users')) {
+                const defaultUsers = [
+                    {
+                        id: 1,
+                        name: 'مدير النظام',
+                        email: 'admin@codelearn.com',
+                        password: 'admin123',
+                        role: 'admin',
+                        avatar: 'م',
+                        joinedAt: new Date().toISOString(),
+                        stats: {
+                            courses: 15,
+                            projects: 8,
+                            challenges: 23,
+                            points: 1500
+                        }
+                    }
+                ];
+                localStorage.setItem('codelearn_users', JSON.stringify(defaultUsers));
+            }
+            
+            // إظهار الصفحة الرئيسية
+            showPage('home');
+        });
+
+        // إغلاق النماذج عند النقر خارجها
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                UserManager.closeModals();
+            }
+        });
+
+        // إغلاق النماذج بالضغط على Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                UserManager.closeModals();
+            }
+        });
+    </script>
+</body>
+</html>
